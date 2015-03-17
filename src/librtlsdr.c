@@ -1388,6 +1388,7 @@ int rtlsdr_get_index_by_serial(const char *serial)
 }
 
 #ifdef ANDROID
+// new argumments are defaulted for the benefit of other internal rtl-sdr tools
 int rtlsdr_open(rtlsdr_dev_t **out_dev, uint32_t index, int fd, const char * uspfs_path_input)
 #else
 int rtlsdr_open(rtlsdr_dev_t **out_dev, uint32_t index)

@@ -438,7 +438,11 @@ int main(int argc, char **argv)
 	    exit(1);
 	}
 
+	#ifdef ANDROID
+	rtlsdr_open(&dev, (uint32_t)dev_index,0,NULL);
+	#else
 	rtlsdr_open(&dev, (uint32_t)dev_index);
+	#endif
 	if (NULL == dev) {
 	fprintf(stderr, "Failed to open rtlsdr device #%d.\n", dev_index);
 		exit(1);

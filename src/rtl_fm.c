@@ -1176,7 +1176,12 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
+	#ifdef ANDROID
+	r = rtlsdr_open(&dongle.dev, (uint32_t)dongle.dev_index,0,NULL);
+	#else
 	r = rtlsdr_open(&dongle.dev, (uint32_t)dongle.dev_index);
+	#endif
+
 	if (r < 0) {
 		fprintf(stderr, "Failed to open rtlsdr device #%d.\n", dongle.dev_index);
 		exit(1);
