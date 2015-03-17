@@ -1,11 +1,8 @@
 if(NOT LIBUSB_FOUND)
-  pkg_check_modules (LIBUSB_PKG libusb-1.0)
+  #pkg_check_modules (LIBUSB_PKG libusb-1.0)
   find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h
     PATHS
-    ${LIBUSB_PKG_INCLUDE_DIRS}
-    #/usr/include/libusb-1.0
-    #/usr/include
-    #/usr/local/include
+    ${LIBUSB_ROOT}/include/libusb-1.0/
   )
 
 #standard library name for libusb-1.0
@@ -19,9 +16,7 @@ endif()
   find_library(LIBUSB_LIBRARIES
     NAMES ${libusb1_library_names}
     PATHS
-    ${LIBUSB_PKG_LIBRARY_DIRS}
-    /usr/lib
-    /usr/local/lib
+    ${LIBUSB_ROOT}/lib/
   )
 
 include(CheckFunctionExists)
