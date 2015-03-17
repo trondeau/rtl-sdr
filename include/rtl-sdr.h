@@ -60,7 +60,12 @@ RTLSDR_API int rtlsdr_get_device_usb_strings(uint32_t index,
  */
 RTLSDR_API int rtlsdr_get_index_by_serial(const char *serial);
 
+#ifdef ANDROID
+RTLSDR_API int rtlsdr_open(rtlsdr_dev_t **dev, uint32_t index, int fd, const char * uspfs_path_input);
+#else
 RTLSDR_API int rtlsdr_open(rtlsdr_dev_t **dev, uint32_t index);
+#endif
+
 
 RTLSDR_API int rtlsdr_close(rtlsdr_dev_t *dev);
 

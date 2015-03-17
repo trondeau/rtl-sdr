@@ -1387,7 +1387,11 @@ int rtlsdr_get_index_by_serial(const char *serial)
 	return -3;
 }
 
+#ifdef ANDROID
+int rtlsdr_open(rtlsdr_dev_t **out_dev, uint32_t index, int fd, const char * uspfs_path_input)
+#else
 int rtlsdr_open(rtlsdr_dev_t **out_dev, uint32_t index)
+#endif
 {
 	int r;
 	int i;
@@ -1406,7 +1410,11 @@ int rtlsdr_open(rtlsdr_dev_t **out_dev, uint32_t index)
 	memset(dev, 0, sizeof(rtlsdr_dev_t));
 	memcpy(dev->fir, fir_default, sizeof(fir_default));
 
+	#ifdef ANDROID
+	libusb_init2(&dev->ctx, uspfs_path_input);
+	#else
 	libusb_init(&dev->ctx);
+	#endif
 
 	dev->dev_lost = 1;
 
@@ -1432,7 +1440,11 @@ int rtlsdr_open(rtlsdr_dev_t **out_dev, uint32_t index)
 		goto err;
 	}
 
+	#ifdef ANDROID
+	r = libusb_open2(device, &dev->devh, fd);
+	#else
 	r = libusb_open(device, &dev->devh);
+	#endif 
 	if (r < 0) {
 		libusb_free_device_list(list, 1);
 		fprintf(stderr, "usb_open error %d\n", r);
